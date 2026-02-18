@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Experiment Thread</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="hide-panel">
+  <header class="topbar">
+    <div class="brand">reddit<span>lab</span></div>
+    <p class="tagline">Step 2+: Story, comments, and social feedback manipulations</p>
+  </header>
+
+  <main class="layout">
+    <section class="feed" aria-label="Thread">
+      <section class="phase-banner">
+        <p id="phase-text"></p>
+      </section>
+
+      <article id="post-card" class="post-card"></article>
+
+      <section class="comments-area" aria-label="Comments">
+        <div class="comments-header">
+          <h2>Comments</h2>
+          <div class="online-pill">
+            <img class="online-gif" src="https://upload.wikimedia.org/wikipedia/commons/c/c7/Loading_2.gif" alt="online activity icon" />
+            <span class="pulse-dot" aria-hidden="true"></span>
+            <span>9 people online</span>
+          </div>
+        </div>
+
+        <form id="comment-form" class="composer" autocomplete="off">
+          <label for="comment-input">Your comment</label>
+          <textarea id="comment-input" maxlength="500" required></textarea>
+          <div class="composer-footer">
+            <span id="char-count">0 / 500</span>
+            <button type="submit">Submit Comment</button>
+          </div>
+        </form>
+
+        <div id="comments-list"></div>
+      </section>
+    </section>
+
+    <aside class="panel" aria-label="Experiment controls">
+      <h2>Experiment Panel</h2>
+
+      <label for="username">Username</label>
+      <input id="username" type="text" maxlength="20" readonly />
+
+      <label for="participant-id">Participant ID</label>
+      <input id="participant-id" type="text" maxlength="40" placeholder="p-001" />
+
+      <label for="feedback-mode">Feedback manipulation</label>
+      <select id="feedback-mode">
+        <option value="up">Upvotes over time</option>
+        <option value="down">Downvotes over time</option>
+      </select>
+
+      <label for="feedback-count">Feedback events (min 5)</label>
+      <input id="feedback-count" type="number" min="5" value="5" />
+
+      <div class="stats">
+        <h3>Session Metrics</h3>
+        <p id="stat-phase">Phase: first_comment_opportunity</p>
+        <p id="stat-events">Events: 0</p>
+        <p id="stat-feedback">Feedback delivered: 0</p>
+      </div>
+
+      <div class="actions">
+        <button id="export-json" type="button">Export JSON</button>
+        <button id="export-csv" type="button">Export CSV</button>
+        <button id="reset-session" type="button" class="danger">Reset Session</button>
+      </div>
+    </aside>
+  </main>
+
+  <div id="modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-card">
+      <h2 id="modal-title"></h2>
+      <p id="modal-body"></p>
+      <button id="modal-action" type="button">Continue</button>
+    </div>
+  </div>
+
+  <div id="toast" class="toast" aria-live="polite"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
