@@ -648,7 +648,7 @@ function autoExportOnComplete() {
     logs: state.logs
   };
 
-  fetch("https://script.google.com/macros/s/AKfycbzsWHidpQ8jL3606XpPe57V__0nk5VAQPJ3ZWBJgEjo67DRX2IN13uhqrdB2_nvuHzZQA/exec", {
+  fetch("https://script.google.com/macros/s/AKfycbxpBbDHq8r0HD1GtwAPjB4kNOzQIdqru9cGbpyhzvLEA0epM2Q1fv_JeEJb8Vf7MxB5kg/exec", {
     method: "POST",
     mode: "no-cors",
     headers: {
