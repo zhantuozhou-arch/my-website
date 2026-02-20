@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Experiment Directions</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">reddit<span>lab</span></div>
+  </header>
+
+  <main class="single-page">
+    <section class="single-card">
+      <h1>Directions</h1>
+      <p>Please follow the steps in order.</p>
+      <ol>
+        <li>Create your username and enter your participant ID below.</li>
+        <li>Read the news story carefully.</li>
+        <li>Read the comment section before posting.</li>
+        <li>Continue through each prompt as it appears.</li>
+      </ol>
+
+      <form id="setup-form" class="setup-form" autocomplete="off">
+        <label for="setup-username">Username for posting</label>
+        <input id="setup-username" type="text" maxlength="20" placeholder="e.g., Alex_01" required />
+
+        <label for="setup-participant-id">Participant ID</label>
+        <input id="setup-participant-id" type="text" maxlength="40" placeholder="e.g., p-001" required />
+
+        <button class="page-button" type="submit">Go to Story Page</button>
+      </form>
+    </section>
+  </main>
+
+  <script>
+    const ONBOARDING_KEY = "reddit-lab-onboarding-v1";
+
+    function sanitizeUsername(raw) {
+      const cleaned = raw.replace(/[^a-zA-Z0-9_-]/g, "").slice(0, 20);
+      return cleaned || "participant";
+    }
+
+    function sanitizeParticipantId(raw) {
+      return raw.replace(/[^a-zA-Z0-9_-]/g, "").slice(0, 40);
+    }
+
+    const setupForm = document.getElementById("setup-form");
+    const usernameInput = document.getElementById("setup-username");
+    const participantIdInput = document.getElementById("setup-participant-id");
+
+    try {
+      const existing = JSON.parse(localStorage.getItem(ONBOARDING_KEY) || "null");
+      if (existing && typeof existing === "object") {
+        usernameInput.value = existing.username || "";
+        participantIdInput.value = existing.participantId || "";
+      }
+    } catch {}
+
+    setupForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      const username = sanitizeUsername(usernameInput.value.trim());
+      const participantId = sanitizeParticipantId(participantIdInput.value.trim());
+
+      if (!participantId) {
+        alert("Please enter a valid participant ID.");
+        participantIdInput.focus();
+        return;
+      }
+
+      usernameInput.value = username;
+      participantIdInput.value = participantId;
+
+      localStorage.setItem(
+        ONBOARDING_KEY,
+        JSON.stringify({ username, participantId, updatedAt: new Date().toISOString() })
+      );
+
+      window.location.href = "story.html";
+    });
+  </script>
+</body>
+</html>
